@@ -1,0 +1,40 @@
+<mxfile host="Electron" modified="2025-01-23T19:50:26.375Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.1 Chrome/112.0.5615.204 Electron/24.6.1 Safari/537.36" etag="pQQMaLHNcdTWN3koYIQa" version="21.6.1" type="device">
+  <diagram id="VUXn6swy8ararOQb8ExX" name="Page-2">
+    <mxGraphModel dx="733" dy="446" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-1" value="DOCKER" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="110" y="120" width="430" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XBO_bMNP0FAmCVB-t2BP-2" target="XBO_bMNP0FAmCVB-t2BP-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-2" value="etl.py" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="245" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-3" value="Postgres&lt;br&gt;Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="XBO_bMNP0FAmCVB-t2BP-4" target="XBO_bMNP0FAmCVB-t2BP-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XBO_bMNP0FAmCVB-t2BP-4" target="XBO_bMNP0FAmCVB-t2BP-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-4" value="homework.py" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="XBO_bMNP0FAmCVB-t2BP-7" target="XBO_bMNP0FAmCVB-t2BP-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-7" value="Web" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="30" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XBO_bMNP0FAmCVB-t2BP-9" value="results.txt" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

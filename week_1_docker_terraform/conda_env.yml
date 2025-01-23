@@ -1,0 +1,10 @@
+# conda env create --file=conda_env.yml
+# conda deactivate
+name: dtc_de_w1
+dependencies:
+  - python==3.12
+  - pip
+  - pip:
+    - pandas==2.2.3
+    - SQLAlchemy==2.0.37
+    - psycopg2-binary==2.9.10

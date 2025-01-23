@@ -1,0 +1,38 @@
+services:
+  pg_db:
+    container_name: postgres
+    image: postgres:17-alpine
+    env_file:
+      - db.env
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      retries: 2
+      interval: 5s
+      timeout: 5s
+  
+  etl:
+    build: .
+    container_name: etl
+    env_file:
+      - db.env
+    depends_on:
+      pg_db:
+        condition: service_healthy
+  
+  homework:
+    build:
+      context: .
+      dockerfile: hw_dockerfile
+    container_name: homework
+    env_file:
+      - db.env
+    depends_on:
+      etl:
+        condition: service_completed_successfully
+    volumes:
+      - ${PWD}/results:/app/results
+
+volumes:
+  results:

@@ -1,0 +1,8 @@
+name: dtc_de
+dependencies:
+  - python:3.12.8
+  - pip
+  - pip:
+    - numpy==2.2.1
+    - pandas==2.2.3
+    - SQLAlchemy==2.0.37

@@ -1,0 +1,17 @@
+FROM python:3.12.8-slim-bullseye
+
+RUN apt update && apt upgrade
+
+ENV PG_USERNAME="postgres" \
+PG_PASSWORD="" \
+PG_HOST="db" \
+PG_PORT="5432" \
+PG_DB_NAME="ny_taxi"
+
+WORKDIR /app
+
+COPY ["homework.py", "requirements.txt", "."]
+
+RUN pip install  --no-cache-dir -r requirements.txt
+
+ENTRYPOINT ["python", "-u", "homework.py"]
