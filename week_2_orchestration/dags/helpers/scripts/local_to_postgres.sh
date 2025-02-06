@@ -1,0 +1,1 @@
+psql $db_con -c "COPY $table_name ($table_columns) FROM STDIN (FORMAT CSV, DELIMITER ',', HEADER)" < $file_path

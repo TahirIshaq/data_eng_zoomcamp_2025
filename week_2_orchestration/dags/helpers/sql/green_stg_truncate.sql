@@ -1,0 +1,1 @@
+TRUNCATE TABLE {{ var.value.taxi_color }}_tripdata_staging;

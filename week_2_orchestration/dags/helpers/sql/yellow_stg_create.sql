@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS {{ var.value.taxi_color }}_tripdata_staging (
+    "unique_row_id"           TEXT,
+    "filename"                TEXT,
+    "VendorID"                INTEGER,
+    "tpep_pickup_datetime"    TIMESTAMP,
+    "tpep_dropoff_datetime"   TIMESTAMP,
+    "passenger_count"         INTEGER,
+    "trip_distance"           DOUBLE PRECISION,
+    "RatecodeID"              TEXT,
+    "store_and_fwd_flag"      TEXT,
+    "PULocationID"            TEXT,
+    "DOLocationID"            TEXT,
+    "payment_type"            INTEGER,
+    "fare_amount"             DOUBLE PRECISION,
+    "extra"                   DOUBLE PRECISION,
+    "mta_tax"                 DOUBLE PRECISION,
+    "tip_amount"              DOUBLE PRECISION,
+    "tolls_amount"            DOUBLE PRECISION,
+    "improvement_surcharge"   DOUBLE PRECISION,
+    "total_amount"            DOUBLE PRECISION,
+    "congestion_surcharge"    DOUBLE PRECISION
+);

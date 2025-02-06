@@ -1,0 +1,53 @@
+digraph ny_taxi_el_backfill {
+	graph [label=ny_taxi_el_backfill labelloc=t rankdir=LR]
+	check_taxi_color [color="#000000" fillcolor="#ffefeb" label=check_taxi_color shape=rectangle style="filled,rounded"]
+	clean_up [color="#000000" fillcolor="#f0ede4" label=clean_up shape=rectangle style="filled,rounded"]
+	download_dataset [color="#000000" fillcolor="#f0ede4" label=download_dataset shape=rectangle style="filled,rounded"]
+	subgraph cluster_green {
+		color="#000000" fillcolor="#6495ed7f" label=green shape=rectangle style=filled
+		"green.upstream_join_id" [color="#000000" fillcolor=CornflowerBlue height=0.2 label="" shape=circle style="filled,rounded" width=0.2]
+		"green.downstream_join_id" [color="#000000" fillcolor=CornflowerBlue height=0.2 label="" shape=circle style="filled,rounded" width=0.2]
+		"green.create_green_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=create_green_staging_tripdata shape=rectangle style="filled,rounded"]
+		"green.create_green_tripdata" [color="#000000" fillcolor="#cdaaed" label=create_green_tripdata shape=rectangle style="filled,rounded"]
+		"green.insert_green_stg_tripdata" [color="#000000" fillcolor="#f0ede4" label=insert_green_stg_tripdata shape=rectangle style="filled,rounded"]
+		"green.merge_green_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=merge_green_staging_tripdata shape=rectangle style="filled,rounded"]
+		"green.truncate_green_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=truncate_green_staging_tripdata shape=rectangle style="filled,rounded"]
+		"green.update_green_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=update_green_staging_tripdata shape=rectangle style="filled,rounded"]
+	}
+	unzip_file [color="#000000" fillcolor="#f0ede4" label=unzip_file shape=rectangle style="filled,rounded"]
+	update_filename_env [color="#000000" fillcolor="#ffefeb" label=update_filename_env shape=rectangle style="filled,rounded"]
+	upload_to_s3 [color="#000000" fillcolor="#ffffff" label=upload_to_s3 shape=rectangle style="filled,rounded"]
+	subgraph cluster_yellow {
+		color="#000000" fillcolor="#6495ed7f" label=yellow shape=rectangle style=filled
+		"yellow.upstream_join_id" [color="#000000" fillcolor=CornflowerBlue height=0.2 label="" shape=circle style="filled,rounded" width=0.2]
+		"yellow.downstream_join_id" [color="#000000" fillcolor=CornflowerBlue height=0.2 label="" shape=circle style="filled,rounded" width=0.2]
+		"yellow.create_yellow_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=create_yellow_staging_tripdata shape=rectangle style="filled,rounded"]
+		"yellow.create_yellow_tripdata" [color="#000000" fillcolor="#cdaaed" label=create_yellow_tripdata shape=rectangle style="filled,rounded"]
+		"yellow.insert_yellow_stg_tripdata" [color="#000000" fillcolor="#f0ede4" label=insert_yellow_stg_tripdata shape=rectangle style="filled,rounded"]
+		"yellow.merge_yellow_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=merge_yellow_staging_tripdata shape=rectangle style="filled,rounded"]
+		"yellow.truncate_yellow_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=truncate_yellow_staging_tripdata shape=rectangle style="filled,rounded"]
+		"yellow.update_yellow_staging_tripdata" [color="#000000" fillcolor="#cdaaed" label=update_yellow_staging_tripdata shape=rectangle style="filled,rounded"]
+	}
+	check_taxi_color -> "green.upstream_join_id"
+	check_taxi_color -> "yellow.upstream_join_id"
+	download_dataset -> unzip_file
+	"green.create_green_staging_tripdata" -> "green.truncate_green_staging_tripdata"
+	"green.create_green_tripdata" -> "green.create_green_staging_tripdata"
+	"green.downstream_join_id" -> clean_up
+	"green.insert_green_stg_tripdata" -> "green.update_green_staging_tripdata"
+	"green.merge_green_staging_tripdata" -> "green.downstream_join_id"
+	"green.truncate_green_staging_tripdata" -> "green.insert_green_stg_tripdata"
+	"green.update_green_staging_tripdata" -> "green.merge_green_staging_tripdata"
+	"green.upstream_join_id" -> "green.create_green_tripdata"
+	unzip_file -> update_filename_env
+	update_filename_env -> upload_to_s3
+	upload_to_s3 -> check_taxi_color
+	"yellow.create_yellow_staging_tripdata" -> "yellow.truncate_yellow_staging_tripdata"
+	"yellow.create_yellow_tripdata" -> "yellow.create_yellow_staging_tripdata"
+	"yellow.downstream_join_id" -> clean_up
+	"yellow.insert_yellow_stg_tripdata" -> "yellow.update_yellow_staging_tripdata"
+	"yellow.merge_yellow_staging_tripdata" -> "yellow.downstream_join_id"
+	"yellow.truncate_yellow_staging_tripdata" -> "yellow.insert_yellow_stg_tripdata"
+	"yellow.update_yellow_staging_tripdata" -> "yellow.merge_yellow_staging_tripdata"
+	"yellow.upstream_join_id" -> "yellow.create_yellow_tripdata"
+}
