@@ -1,0 +1,27 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:17-alpine
+    env_file:
+      - db.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - vol-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      retries: 2
+      interval: 5s
+      timeout: 5s
+  el_dlt:
+    build: .
+    container_name: el_dlt
+    env_file:
+      - db.env
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  vol-pgdata:
+    name: vol-pgdata
