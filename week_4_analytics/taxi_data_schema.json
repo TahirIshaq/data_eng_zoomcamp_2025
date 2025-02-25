@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft-04/schema#",
+    "title": "Composer Package",
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "taxi_type": {
+          "type": "string",
+          "enum": [
+            "yellow",
+            "green",
+            "fhv"
+          ]
+        },
+        "taxi_year": {
+          "type": "integer",
+          "minimum": 2019,
+          "maximum": 2021
+        },
+        "taxi_months": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "taxi_type",
+        "taxi_year",
+        "taxi_months"
+      ],
+      "additionalProperties": false
+    },
+    "minItems": 1,
+    "uniqueItems": true
+}

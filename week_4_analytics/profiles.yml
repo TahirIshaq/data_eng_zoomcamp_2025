@@ -1,0 +1,22 @@
+postgres:
+  outputs:
+    dev:
+      dbname: ny_taxi
+      host: db
+      pass: postgres
+      port: 5432
+      schema: raw_data
+      threads: 4
+      type: postgres
+      user: postgres
+    
+    prod:
+      dbname: ny_taxi
+      host: db
+      pass: postgres
+      port: 5432
+      schema: master
+      threads: 4
+      type: postgres
+      user: postgres
+  target: dev

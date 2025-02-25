@@ -1,0 +1,64 @@
+services:
+  db:
+    container_name: postgres
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'ny_taxi'
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./init_db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - vol-pgdata:/var/lib/postgresql/data
+    # networks:
+    #   - pg_python
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      retries: 2
+      interval: 5s
+      timeout: 5s
+  
+  update_db:
+    build: .
+    image: populate_db
+    container_name: update_db
+    environment:
+      PG_USERNAME: "postgres"
+      PG_PASSWORD: "postgres"
+      PG_HOST: "db"
+      PG_PORT: "5432"
+      PG_DB_NAME: "ny_taxi"
+      PG_SCHEMA: "raw_data"
+      TAXI_DATA: '[{"taxi_type": "green", "taxi_year": 2019, "taxi_months": [1,2,3,4,5,6,7,8,9,10,11,12]},{"taxi_type": "green", "taxi_year": 2020, "taxi_months": [1,2,3,4,5,6,7,8,9,10,11,12]}, {"taxi_type": "yellow", "taxi_year": 2019, "taxi_months": [1,2,3,4,5,6,7,8,9,10,11,12]}, {"taxi_type": "yellow", "taxi_year": 2020, "taxi_months": [1,2,3,4,5,6,7,8,9,10,11,12]}, {"taxi_type": "fhv", "taxi_year": 2019, "taxi_months": [1,2,3,4,5,6,7,8,9,10,11,12]}]'
+    # networks:
+    #   - pg_python
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  dbt_etl:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+    container_name: dbt_etl
+    environment:
+      DBT_PROFILE: postgres
+      DBT_TARGET: prod
+      DBT_SCHEMA: raw_data
+      IS_TEST_RUN: true
+    entrypoint: >
+      bash -c "dbt deps && dbt build"
+    volumes:
+      - ./ny_taxi:/usr/app
+      - ./profiles.yml:/root/.dbt/profiles.yml
+    # networks:
+    #   - pg_python
+    depends_on:
+      update_db:
+        condition: service_completed_successfully
+
+volumes:
+  vol-pgdata:
+    name: vol-pgdata
+# networks:
+#  pg_python:
+#    external: true
