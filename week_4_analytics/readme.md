@@ -34,6 +34,15 @@ ny_taxi-# (SELECT COUNT(*) FROM fhv_taxi) AS fhv_records;
 ---------------+----------------+-------------
        7778101 |      109047518 |    43244696
 (1 row)
+
+SET SEARCH_PATH TO master;
+
+SELECT (SELECT COUNT(*) FROM dim_zones) AS dim_zones_count, (SELECT COUNT(*) FROM dm_monthly_zone_revenue) AS dm_monthly_total, (SELECT COUNT(*) FROM fact_trips) AS fact_trips_total;
+
+ dim_zones_count | dm_monthly_total | fact_trips_total 
+-----------------+------------------+------------------
+             265 |               74 |              194
+(1 row)
 ```
 
 Loading all the tables to the database took approximately 8 minutes and dbt with test run takes approximately 6 minutes.
@@ -60,7 +69,7 @@ export DBT_BIGQUERY_DATASET=my_nyc_tripdata
 
 Run `dbt compile --inline select * from {{ source('raw_nyc_tripdata', 'ext_green_taxi' ) }}`. `dbt compile` is dependent on [dbt debug](https://docs.getdbt.com/faqs/Warehouse/db-connection-dbt-compile). The output can be found in `ny_taxi/target/`
 
-**Answer**: select * from "myproject"."raw_nyc_tripdata"."ext_green_taxi"
+**Answer**: `select * from "myproject"."raw_nyc_tripdata"."ext_green_taxi"`
 
 ### Question 2: which takes precedence over DEFAULT value?
 [dbt variables precedence](https://docs.getdbt.com/docs/build/project-variables#defining-variables-on-the-command-line)
@@ -90,7 +99,7 @@ The output compiled SQL command can be found in `ny_taxi/target`
 
 From the available information, `fct_taxi_monthly_zone_revenue.sql` is located in `dbt_project/core`
 
-***Answer:** `dbt run --select models/staging/+`
+**Answer:** `dbt run --select models/staging/+`
 
 ### Question 4: Select all statements that are true to the models using it:
 [dbt variables precedence](https://docs.getdbt.com/docs/build/project-variables#defining-variables-on-the-command-line)
